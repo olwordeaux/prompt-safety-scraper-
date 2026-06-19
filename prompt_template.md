@@ -56,7 +56,7 @@ The string must be parseable by `json.loads()`. Example: `{"code": "import torch
 2. Parameter values (like `kernel_size`, `stride`, `padding`) **MUST** exactly match the provided API Validation Registry.  
    **NEVER** invent or assume parameters – only use attributes verified by the registry. Unconfirmed arguments are a **SECURITY VIOLATION**.
 3. **Numerical Stability (HARD REQUIREMENT)**:
-   - Always clip gradients to max‑norm 1.0 unless the IR specifies otherwise.
+   - Always clip gradients to max‑norm 1.0 unless the IR specifies otherwise: `torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)`.
    - Add `epsilon=1e-8` to any division or normalisation operation to prevent `NaN` or `Inf`.
    - Use `torch.autograd.set_detect_anomaly(True)` during any training loop to catch unstable gradients immediately.
 4. Do **NOT** include file write operations, network calls, or unsafe attribute access – the sandbox blocks them anyway.
